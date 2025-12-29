@@ -1,0 +1,19 @@
+
+{
+  "plugins": [
+    {
+      "id": "dom-analyzer",
+      "name": "DOM要素解析",
+      "version": "1.0.0",
+      "enabled": true,
+      "requiresBackend": false
+    },
+    {
+      "id": "whois-checker",
+      "name": "ドメイン年齢チェック",
+      "version": "1.0.0",
+      "enabled": true,
+      "requiresBackend": true
+    }
+  ]
+}

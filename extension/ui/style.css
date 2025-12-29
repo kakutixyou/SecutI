@@ -1,0 +1,100 @@
+body {
+    width: 350px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+.container {
+    padding: 15px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 10px;
+}
+
+.logo {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.scan-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.scan-btn:hover {
+    background-color: #0056b3;
+}
+
+.scan-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#result-area {
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.hidden {
+    display: none;
+}
+
+.score-display {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.score-value {
+    font-size: 32px;
+    font-weight: bold;
+    display: block;
+}
+
+.risk-level {
+    font-size: 14px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    color: white;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.safe { background-color: #28a745; }
+.warning { background-color: #ffc107; color: #333; }
+.danger { background-color: #dc3545; }
+
+.reasons-list {
+    margin: 10px 0;
+    padding-left: 20px;
+    font-size: 14px;
+    color: #495057;
+}
+
+.loading {
+    text-align: center;
+    color: #6c757d;
+    padding: 20px;
+}

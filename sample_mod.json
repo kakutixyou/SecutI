@@ -1,0 +1,12 @@
+{
+  "name": "AviUtl公式誘導Mod",
+  "author": "この世界のだれか",
+  "description": "非公式配布サイト(Softonic)を開いた時に、公式を見るよう警告します",
+  "rules": [
+    {
+      "url_pattern": "softonic.jp",
+      "action": "alert",
+      "message": "⚠️ 「AviUtlのお部屋 (spring-fragrance.mints.ne.jp)」を確認しましたか？"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "id": "dom-analyzer",
+  "name": "DOM要素解析",
+  "description": "ページ内のフォーム・入力欄を検出",
+  "version": "1.0.0",
+  "author": "secutI Team"
+}

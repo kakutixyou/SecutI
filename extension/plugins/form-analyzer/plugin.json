@@ -1,0 +1,8 @@
+{
+  "id": "form-analyzer",
+  "name": "フォーム送信先解析",
+  "description": "フォームの送信先URLとセキュリティリスクを検出",
+  "version": "1.0.0",
+  "author": "secutI Team",
+  "requiresBackend": false
+}

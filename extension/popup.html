@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>secutI</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 360px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f4f6f8;
+      color: #333;
+    }
+
+    /* ヘッダー */
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 15px 20px;
+      color: white;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header h1 { font-size: 18px; margin: 0; display: flex; align-items: center; gap: 8px; }
+    .header-status { font-size: 11px; background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; }
+
+    /* タブ */
+    .tabs { display: flex; background: white; border-bottom: 1px solid #eee; }
+    .tab-btn {
+      flex: 1; padding: 12px; background: none; border: none; cursor: pointer;
+      font-size: 13px; font-weight: 600; color: #888; border-bottom: 2px solid transparent;
+    }
+    .tab-btn.active { color: #667eea; border-bottom-color: #667eea; }
+
+    .panel { display: none; padding: 15px; }
+    .panel.active { display: block; animation: fadeIn 0.3s; }
+
+    /* カードデザイン */
+    .card { background: white; border-radius: 8px; padding: 15px; margin-bottom: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .card-title { font-size: 12px; font-weight: bold; color: #555; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* ドメイン情報 */
+    .domain-info { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+    .domain-icon { font-size: 24px; }
+    .domain-name { font-weight: bold; font-size: 16px; word-break: break-all; }
+
+    /* 履歴バッジ */
+    .history-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+    .history-item { background: #f8f9fa; padding: 8px; border-radius: 6px; text-align: center; }
+    .history-label { font-size: 10px; color: #888; display: block; }
+    .history-badge { display: inline-block; font-size: 12px; font-weight: bold; margin-top: 2px; }
+    .badge-safe { color: #2e7d32; }
+    .badge-warn { color: #c62828; }
+    .badge-unknown { color: #999; }
+
+    /* 検出リスト */
+    .warning-list { max-height: 150px; overflow-y: auto; font-size: 12px; border: 1px solid #eee; border-radius: 4px; }
+    .warning-item { padding: 8px; border-bottom: 1px solid #eee; display: flex; gap: 8px; }
+    .warning-item:last-child { border-bottom: none; }
+    .no-warnings { padding: 10px; color: #999; text-align: center; font-size: 12px; }
+
+    /* スイッチ */
+    .switch-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+    .switch-row:last-child { border-bottom: none; }
+    .switch-label { font-size: 13px; }
+    
+    .toggle { position: relative; display: inline-block; width: 40px; height: 20px; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 20px; }
+    .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 2px; bottom: 2px; background-color: white; transition: .4s; border-radius: 50%; }
+    input:checked + .slider { background-color: #667eea; }
+    input:checked + .slider:before { transform: translateX(20px); }
+
+    /* ツールリンク */
+    .tools { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+    .btn-tool {
+      text-decoration: none; background: #f0f2f5; color: #333; padding: 8px; 
+      border-radius: 4px; font-size: 11px; text-align: center; display: block;
+      transition: background 0.2s;
+    }
+    .btn-tool:hover { background: #e4e6eb; }
+
+    /* 新しいボタン用スタイル */
+    .btn {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.9; }
+    .btn-primary { background: #667eea; color: white; }
+    .btn-secondary { background: #f0f2f5; color: #555; border: 1px solid #ddd; }
+
+    .footer { text-align: center; padding: 15px; color: #999; font-size: 10px; }
+    .status-msg { font-size: 11px; margin-top: 5px; text-align: center; min-height: 1.2em; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>🛡️ secutI</h1>
+    <span class="header-status">Protection ON</span>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-target="status">📊 Status Report</button>
+    <button class="tab-btn" data-target="settings">⚙️ Settings</button>
+  </div>
+
+  <div id="panel-status" class="panel active">
+    <div id="mod-alert-banner" style="display: none; background: #ff5252; color: white; padding: 12px; margin-bottom: 15px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+      <div style="font-weight: bold; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+        ⚠️ Mod Warning
+      </div>
+      <div id="mod-alert-text" style="font-size: 11px; line-height: 1.4;"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">DOMAIN INTELLIGENCE</div>
+      <div class="domain-info">
+        <span class="domain-icon">🌐</span>
+        <div class="domain-name" id="domain-display">Analyzing...</div>
+      </div>
+      
+      <div class="history-grid" id="history-area" style="opacity: 0.5;">
+        <div class="history-item">
+          <span class="history-label">1 Year Ago</span>
+          <span class="history-badge badge-unknown" id="hist-1y">Checking...</span>
+        </div>
+        <div class="history-item">
+          <span class="history-label">2 Years Ago</span>
+          <span class="history-badge badge-unknown" id="hist-2y">Checking...</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">DETECTION FINDINGS</div>
+      <div class="warning-list" id="warning-list">
+        <div class="no-warnings">No data available yet.</div>
+      </div>
+    </div>
+
+    <div class="tools">
+      <a href="#" target="_blank" id="link-google" class="btn-tool">🔍 Google Search</a>
+      <a href="#" target="_blank" id="link-whois" class="btn-tool">📅 Whois Info</a>
+    </div>
+
+  </div>
+
+  <div id="panel-settings" class="panel">
+    
+    <div class="card">
+      <div class="card-title">PROTECTION MODULES</div>
+      
+      <div class="switch-row">
+        <div class="switch-label">Anti-Phishing (フィッシング検出)</div>
+        <label class="toggle">
+          <input type="checkbox" id="toggle-phishing" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="switch-row">
+        <div class="switch-label">Script Analyzer (スクリプト解析)</div>
+        <label class="toggle">
+          <input type="checkbox" id="toggle-script" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="switch-row">
+        <div class="switch-label">Download Block (ダウンロード遮断)</div>
+        <label class="toggle">
+          <input type="checkbox" id="toggle-dbd">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">CUSTOM MODS</div>
+      <p style="font-size: 11px; color: #666; margin-bottom: 10px;">
+        作成したJSONファイルを読み込み、機能を拡張します。
+      </p>
+      
+      <input type="file" id="mod-file-input" accept=".json" style="display: none;">
+      
+      <button id="btn-import-mod" class="btn btn-primary">
+        📦 Modファイル(.json)を選択
+      </button>
+      
+      <div id="mod-status" class="status-msg"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">DATA MANAGEMENT</div>
+      <button id="btn-export-logs" class="btn btn-secondary">
+        📝 検知ログを出力 (JSON)
+      </button>
+    </div>
+
+    <div style="padding: 10px; background: #e3f2fd; border-radius: 6px; font-size: 11px; color: #1565c0; line-height: 1.4; margin-top: 10px;">
+      ℹ️ 設定変更後は、開いているタブを再読み込みしてください。
+    </div>
+  </div>
+
+  <div class="footer">
+    secutI v1.0.0 | Powered by Shadow DOM
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

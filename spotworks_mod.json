@@ -1,0 +1,12 @@
+{
+  "name": "Spotworks誤認防止Mod",
+  "author": "Me",
+  "description": "紛らわしい類似ドメインを警告します",
+  "rules": [
+    {
+      "url_pattern": "spotwork-s.com",
+      "action": "alert",
+      "message": "⚠️ 注意！\n電話番号、メアドやパスワードを打った後、画面遷移がありません。"
+    }
+  ]
+}

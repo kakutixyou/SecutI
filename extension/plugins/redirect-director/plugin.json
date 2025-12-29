@@ -1,0 +1,8 @@
+{
+  "id": "redirect-detector",
+  "name": "リダイレクト検出",
+  "description": "JavaScriptやMeta refreshによるリダイレクトを検出",
+  "version": "1.0.0",
+  "author": "secutI Team",
+  "requiresBackend": false
+}
